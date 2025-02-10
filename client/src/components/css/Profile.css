@@ -1,0 +1,38 @@
+.profile-container {
+  padding: 20px;
+}
+
+.profile-title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.profile-card {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.profile-photo {
+  width: 100%; /* или задайте определенный размер */
+  border-radius: 50%; /* Делаем фото круглым */
+  max-width: 150px; /* Ограничиваем максимальный размер */
+}
+
+.profile-row {
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+p {
+  margin: 0;
+}
+
+.modal-header,
+.modal-footer {
+  background-color: #f7f7f7;
+}

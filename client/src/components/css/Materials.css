@@ -1,0 +1,58 @@
+/* Materials.css */
+
+.materials-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.header-title {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #343a40;
+}
+
+.dropdown-margin {
+  margin-right: 10px;
+}
+
+.upload-button {
+  margin-left: 10px;
+}
+
+.materials-card {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.material-item {
+  border-bottom: 1px solid #dee2e6;
+  padding: 10px 0;
+}
+
+.material-subject,
+.material-type,
+.material-file,
+.material-description {
+  font-size: 1.1rem;
+  color: #495057;
+  margin-left: 15px;
+}
+
+.material-subject {
+  font-weight: bold;
+  align: center;
+}
+
+.material-type {
+  color: #007bff;
+}
+
+.material-file {
+  color: #28a745;
+}
+
+.material-description {
+  color: #6c757d;
+}

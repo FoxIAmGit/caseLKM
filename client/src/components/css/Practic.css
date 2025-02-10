@@ -1,0 +1,48 @@
+/* Practic.css */
+
+.practic-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.practic-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #343a40;
+}
+
+.practic-row {
+  margin-bottom: 20px;
+}
+
+.practic-card {
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.practic-company,
+.practic-job,
+.practic-location,
+.practic-duration,
+.practic-description {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.practic-button {
+  margin-top: 15px;
+}
+.practic-job {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.practic-company,
+.practic-location,
+.practic-duration,
+.practic-description {
+  margin-bottom: 5px;
+}

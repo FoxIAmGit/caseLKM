@@ -1,0 +1,66 @@
+/* Calendar.css */
+
+.calendar-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendar-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.calendar-button:hover {
+  background-color: #0056b3;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: 10px;
+}
+
+.day-header {
+  text-align: center;
+  font-weight: bold;
+  color: #555;
+}
+
+.empty-cell {
+  background-color: transparent;
+}
+
+.day-cell {
+  text-align: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 2px; /* Добавим небольшой отступ между ячейками */
+  transition: background-color 0.3s;
+}
+
+.day-cell:hover {
+  background-color: #e9ecef;
+}

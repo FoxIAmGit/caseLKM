@@ -1,0 +1,70 @@
+/* Main.css */
+
+.main-container {
+  padding: 20px;
+  background-color: #f0f4f8;
+}
+
+.welcome-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.card-columns {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-card {
+  border-radius: 35px;
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.info-card .text-center {
+  font-size: 1.2rem;
+}
+
+.value-text {
+  font-weight: bold;
+  text-align: center;
+  color: green;
+  font-size: 2.5rem;
+}
+
+.schedule-card {
+  border-radius: 35px;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.schedule-item {
+  border-radius: 25px;
+  width: 85%;
+}
+
+.pair-number {
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.subject {
+  font-weight: bold;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+.teacher {
+  text-align: left;
+  font-size: 1rem;
+}
+
+.time-room {
+  font-weight: bold;
+  text-align: right;
+  font-size: 1rem;
+}
