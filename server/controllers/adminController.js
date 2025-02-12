@@ -61,11 +61,10 @@ class adminController {
                             as: 'user', // Убедитесь, что вы используете правильный псевдоним
                         }
                     ],
-                    attributes: ['id'], // Возможно, вы хотите получить и другие атрибуты учителя
-                    as: 'teacher', // Убедитесь, что это правильный псевдоним для учителей
+                    attributes: ['id'], 
+                    as: 'teacher', 
                 }
             ],
-            order : ["$faculty.full_name$"]
         });
 
         if (!faculties || faculties.length === 0) {
@@ -79,8 +78,7 @@ class adminController {
                 cipher: faculty.cipher, 
                 full_name: faculty.full_name,
                 // Получаем имена всех учителей и объединяем их в строку
-                teach_names: faculty.teacher ? 
-                    faculty.teacher.map(teacher => teacher.user.full_name).join(', ') : null
+                teach_names: faculty.teacher.user.full_name
             };
         });
         

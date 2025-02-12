@@ -11,8 +11,8 @@ import {
 } from "react-bootstrap";
 
 import { Context } from "../index";
-import { LOGIN_ROUTE, menuItems } from "../utils/consts";
-import { loginApi, logOutAPI } from "../http/userAPI";
+import { LOGIN_ROUTE, menuItemsStudent, menuItemsTeacher } from "../utils/consts";
+import { logOutAPI } from "../http/userAPI";
 
 const NavBar = observer(() => {
   const { user } = useContext(Context);
@@ -40,20 +40,32 @@ const NavBar = observer(() => {
             </Button>
           ) : (
             <DropdownButton
-              title="Меню"
-              drop="down"
-              align="end"
-              id="dropdown-menu-align-end"
+    title="Меню"
+    drop="down"
+    align="end"
+    id="dropdown-menu-align-end"
+>
+    {user._user.role === "student" ? (
+        menuItemsStudent.map((item) => (
+            <Dropdown.Item
+                key={item.eventKey}
+                eventKey={item.eventKey}
+                onClick={() => navigate(item.path)}
             >
-              {menuItems.map((item) => (
-                <Dropdown.Item
-                  key={item.eventKey}
-                  eventKey={item.eventKey}
-                  onClick={() => navigate(item.path)}
-                >
-                  {item.label}
-                </Dropdown.Item>
-              ))}
+                {item.label}
+            </Dropdown.Item>
+        ))
+    ) : (
+        menuItemsTeacher.map((item) => (
+            <Dropdown.Item
+                key={item.eventKey}
+                eventKey={item.eventKey}
+                onClick={() => navigate(item.path)}
+            >
+                {item.label}
+            </Dropdown.Item>
+        ))
+    )}
               <Dropdown.Divider />
               <Dropdown.Item
                 as={Button}

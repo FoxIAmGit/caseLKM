@@ -3,7 +3,7 @@ import { Container, Form, Card, Button } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Context } from "../index";
-import { MAIN, ZERO } from "../utils/consts";
+import { ADMIN_ROUTE, MAIN, ZERO } from "../utils/consts";
 import { loginApi } from "../http/userAPI";
 import bging from "../image/фон_УГНТУ.png";
 
@@ -22,7 +22,10 @@ const Auth = observer(() => {
           user.setIsAuth(true);
         }
       })
-      .then(() => navigate(MAIN))
+      .then(() => {
+        const page =  user._user.role !== "admin" ? MAIN : ADMIN_ROUTE 
+        navigate(page)
+      })
       .catch((e) => {
         alert(e.response ? e.response.data.message : "Ошибка при входе");
       });

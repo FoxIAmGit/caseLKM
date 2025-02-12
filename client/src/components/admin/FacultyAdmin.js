@@ -35,6 +35,8 @@ export default function FacultyAdmin() {
         faculties.forEach((element) => {
           faculty.addFaculty(element);
         });
+        console.log(faculties);
+        
       } catch (err) {
         alert(err.response?.data?.message || "Ошибка при загрузке факультетов");
       } finally {
@@ -68,22 +70,22 @@ export default function FacultyAdmin() {
   }
 
   return (
-    <Container>
-      <h3>Добавить новый факультет</h3>
+    <Container className="mb-3 p-1 justify-content-between">
+      <h3 className="mb-3">Добавить новый факультет</h3>
       <Form inline style={{ marginBottom: "20px" }}>
         <Form.Control
-          type="text"
+          type="text" 
           placeholder="Шифр факультета"
           value={newFacultyCipher}
           onChange={(e) => setNewFacultyCipher(e.target.value)}
-          className="mr-2"
+          className="mr-2 mb-3"
         />
         <Form.Control
           type="text"
           placeholder="Полное название факультета"
           value={newFacultyName}
           onChange={(e) => setNewFacultyName(e.target.value)}
-          className="mr-2"
+          className="mr-2 mb-3"
         />
         <Button variant="primary" onClick={addFaculty} disabled={addLoading}>
           {addLoading ? "Добавление..." : "Добавить"}
@@ -91,14 +93,15 @@ export default function FacultyAdmin() {
       </Form>
 
       {faculty.faculties.map((fac) => (
-        <Card key={fac.id} data-id={fac.id} className="mb-3">
-          <Row>
+        <Card key={fac.id} data-id={fac.id} className="mb-3 justify-content-between">
+          <Card.Body className="ml-3 justify-content-between">
+          <Row> 
             <Col>
-              <Row>{fac.cipher}</Row>
+              <Row className="mb-3"><h2>{fac.cipher}</h2></Row>
               <Row>{fac.full_name}</Row>
             </Col>
             <Col>
-              <Row>{fac.teacherId}</Row>
+              <Row className="mb-3"><strong>{fac.teach_names}</strong></Row>
               <Row>
                 <Button
                   variant="outline-success"
@@ -114,6 +117,7 @@ export default function FacultyAdmin() {
               </Row>
             </Col>
           </Row>
+          </Card.Body>
         </Card>
       ))}
     </Container>

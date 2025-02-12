@@ -76,43 +76,43 @@ export default function GroupsAdmin() {
   }
 
   return (
-    <Container>
-      <h3>Добавить новую группу</h3>
+    <Container className="mb-3 p-1 justify-content-between">
+      <h3 className="mb-3">Добавить новую группу</h3>
       <Form inline style={{ marginBottom: "20px" }}>
         <Form.Control
           type="text"
           placeholder="Шифр группы"
           value={newGroupCipher}
           onChange={(e) => setNewGroupCipher(e.target.value)}
-          className="mr-2"
+          className="mr-2 mb-3"
         />
         <Form.Control
           type="text"
           placeholder="Полное название группы"
           value={newGroupName}
           onChange={(e) => setNewGroupName(e.target.value)}
-          className="mr-2"
+          className="mr-2 mb-3"
         />
         <Form.Control
           type="text"
           placeholder="Год начала"
           value={newGroupStartYear}
           onChange={(e) => setNewGroupStartYear(e.target.value)}
-          className="mr-2"
+          className="mr-2 mb-3"
         />
         <Form.Control
           type="text"
           placeholder="Количество семестров"
           value={newGroupTotalSem}
           onChange={(e) => setNewGroupTotalSem(e.target.value)}
-          className="mr-2"
+          className="mr-2 mb-3"
         />
         <Form.Control
           type="text"
           placeholder="Факультет"
           value={newGroupFaculty}
           onChange={(e) => setNewGroupFaculty(e.target.value)}
-          className="mr-2"
+          className="mr-2 mb-3"
         />
         <Button variant="primary" onClick={addGroup} disabled={addLoading}>
           {addLoading ? "Добавление..." : "Добавить"}
@@ -120,18 +120,20 @@ export default function GroupsAdmin() {
       </Form>
 
       {group.groups.map((grpItem) => (
-        <Card key={grpItem.id} data-id={grpItem.id} className="mb-3">
-          <Row>{grpItem.faculty.full_name}</Row>
+        <Card key={grpItem.id} data-id={grpItem.id} className="mb-3 justify-content-between">
+          <Card.Body className="ml-3 justify-content-between">
+          <Row className="mb-3"><h2>{grpItem.faculty.full_name}</h2></Row>
           <Row>
             <Col>
-              <Row>{grpItem.cipher}</Row>
+              <Row className="mb-3"><strong>{grpItem.cipher}</strong></Row>
               <Row>{grpItem.name}</Row>
             </Col>
-            <Col>
-              <Row>{grpItem.start_year}</Row>
-              <Row>{grpItem.total_sem}</Row>
+            <Col className="pl-5">
+              <Row className="mb-3"><strong>{grpItem.start_year}</strong></Row>
+              <Row><i>{`${grpItem.total_sem} семестров`}</i></Row>
             </Col>
           </Row>
+          </Card.Body>
         </Card>
       ))}
     </Container>

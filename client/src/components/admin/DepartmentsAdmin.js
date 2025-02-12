@@ -68,22 +68,22 @@ export default function DepartmentsAdmin() {
   }
 
   return (
-    <Container>
-      <h3>Добавить новый факультет</h3>
+    <Container className="mb-3 p-1 justify-content-between">
+      <h3  className="mb-3">Добавить новый факультет</h3>
       <Form inline style={{ marginBottom: "20px" }}>
         <Form.Control
           type="text"
           placeholder="Шифр факультета"
           value={newDeptCipher}
           onChange={(e) => setNewDeptCipher(e.target.value)}
-          className="mr-2"
+          className="mr-2 mb-3"
         />
         <Form.Control
           type="text"
           placeholder="Полное название факультета"
           value={newDeptName}
           onChange={(e) => setNewDeptName(e.target.value)}
-          className="mr-2"
+          className="mr-2 mb-3"
         />
         <Button variant="primary" onClick={addDept} disabled={addLoading}>
           {addLoading ? "Добавление..." : "Добавить"}
@@ -91,14 +91,15 @@ export default function DepartmentsAdmin() {
       </Form>
 
       {dept.depts.map((dep) => (
-        <Card key={dep.id} data-id={dep.id} className="mb-3">
+        <Card key={dep.id} data-id={dep.id} className="mb-3 justify-content-between">
+          <Card.Body className="ml-3 justify-content-between">
           <Row>
             <Col>
-              <Row>{dep.fac_cipher}</Row>
+              <Row className="mb-3"><h2>{dep.fac_cipher}</h2></Row>
               <Row>{dep.name}</Row>
             </Col>
             <Col>
-              <Row>{dep.teach_name}</Row>
+              <Row className="mb-3"><strong>{dep.teach_name}</strong></Row>
               <Row>
                 <Button
                   variant="outline-success"
@@ -114,6 +115,7 @@ export default function DepartmentsAdmin() {
               </Row>
             </Col>
           </Row>
+          </Card.Body>
         </Card>
       ))}
     </Container>

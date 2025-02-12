@@ -63,7 +63,7 @@ const Admin = observer(() => {
 
   return (
     <Container>
-      <Row>
+      <Row className="mt-3 justify-content-between">
         <Col md={3}>
           <ListGroup>
             {Object.keys(componentsMap).map((category) => (
@@ -92,7 +92,7 @@ const Admin = observer(() => {
           </ListGroup>
         </Col>
         <Col md={9}>
-          <CurrentComponent />
+          <CurrentComponent  />
         </Col>
       </Row>
 
