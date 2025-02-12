@@ -16,25 +16,25 @@ class profileController {
   async getOne(req, res, next) {
     try {
       const id = req.user.id;
-
+      
       switch (req.user.role) {
         case "student":
-          const student = await Students.findOne(
-            { include: [{ model: Groups, include: [Faculties] }] },
-            { where: { userId: id } },
-          );
-          return res.json({ student });
+          const student = await Students.findOne({ 
+            include: [{ model: Groups, include: [Faculties] }],
+            where: { "$student.userId$": id },
+          });
+          return res.json( student );
 
         case "teacher":
           const teacher = await Teachers.findOne(
             { include: [{ model: Departments, include: [Faculties] }] },
-            { where: { teacherId: id } },
+            { where: { "$teacher.userId$": id } },
           );
-          return res.json({ teacher });
+          return res.json(teacher );
 
         default:
           const user = await Users.findOne({ where: { id } });
-          return res.json({ user });
+          return res.json( user );
       }
     } catch (e) {
       next(errors.badRequest(e.message));
@@ -51,7 +51,7 @@ class profileController {
       if (phone) updates.phone = phone;
       if (password) {
         updates.password = await bcrypt.hash(password, 5);
-      }
+      } 
 
       if (await Users.update(updates, { where: { id } })) {
         const updatedRecord = await Users.findOne({ where: { id } });

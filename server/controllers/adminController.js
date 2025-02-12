@@ -65,6 +65,7 @@ class adminController {
                     as: 'teacher', // Убедитесь, что это правильный псевдоним для учителей
                 }
             ],
+            order : ["$faculty.full_name$"]
         });
 
         if (!faculties || faculties.length === 0) {
@@ -147,7 +148,7 @@ class adminController {
                 attributes: ['id'],
                 as: 'teacher',
             }
-        ]
+        ], order : ["name"]
     });
 
 
@@ -194,7 +195,7 @@ class adminController {
 
   async getGroup(req, res, next) {
     try {
-      const groups = await Groups.findAll({include: Faculties});
+      const groups = await Groups.findAll({include: Faculties}, {order : ["cipher"]});
       if (!groups) {
         return next(errors.badRequest("Группы еще не созданы"));
       }

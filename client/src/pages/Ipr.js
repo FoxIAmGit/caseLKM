@@ -156,23 +156,16 @@ export default function Ipr() {
         tasks.map((task) => (
           <Card key={task.id} className="mb-3">
             <Card.Body>
-              <Row>
+              <Row className="d-flex justify-content-center align-items-center">
                 <Col>
-                  <div className="fw-bold">{task.title}</div>
+                  <h2 className="fw-bold mb-3">{task.title}</h2>
                 </Col>
                 <Col>
-                  <div className="text-muted">
-                    {task.start_date} - {task.end_date}
+                  <div className="text-muted mb-3">
+                    {task.start_date.split("T")[0]} - {task.end_date.split("T")[0]}
                   </div>
                 </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <div>{task.descript}</div>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
+                <Col md={3} className="d-flex justify-content-between align-items-center">
                   <Button variant="danger" onClick={() => handleDelete(task.id)}>
                     Удалить
                   </Button>
@@ -184,6 +177,12 @@ export default function Ipr() {
                     Редактировать
                   </Button>
                 </Col>
+              </Row>
+              <Row className="d-flex justify-content-center align-items-center">
+                <Col>
+                  <div>{task.descript}</div>
+                </Col>
+                
               </Row>
             </Card.Body>
           </Card>

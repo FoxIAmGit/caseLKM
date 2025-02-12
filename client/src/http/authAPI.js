@@ -75,7 +75,7 @@ export const fetchCountLessonsToday = async () => {
   const response = await $authHost.get(`api/main/les`);
   return response.data;
 };
-
+ 
 // Получение уроков на сегодня
 export const fetchLessonsToday = async () => {
   const response = await $authHost.get(`api/main/les`);
@@ -115,5 +115,58 @@ export const fetchMaterialsForTeacher = async () => {
 
 export const fetchSubjects = async () => {
   const response = await $authHost.get("/api/material/subject"); 
+  return response.data;
+};
+
+export const fetchAllVacancies = async () => {
+  const response = await $authHost.get("/api/practic"); 
   return response.data.rows;
+};
+
+export const fetchMyVacancies = async () => {
+  const response = await $authHost.get("/api/practic/my"); 
+  return response.data;
+};
+
+export const applyForVacancy = async (id) => {
+  const response = await $authHost.post(`/api/practic/${id}`); 
+  return response.data.rows;
+};
+
+export const fetchUser = async () => {
+  const response = await $authHost.get(`/api/profile`); 
+  return response.data;
+};
+
+export const updateUser = async (email, phone, password) => {
+  const response = await $authHost.put(`/api/profile`, {email, phone, password}); 
+  return response.data;
+};
+
+export const addResumeUser = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  const response = await $authHost.put(`/api/profile/resume`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  
+  return response.data;
+};
+
+export const getAll = async (page, searchText) => {
+  const response = await $authHost.post('api/timetable', {  page, searchText });
+  return response.data;
+};
+
+export const getAllByDate = async (page) => {
+  const response = await $authHost.get('api/timetable/date', { page });
+  return response.data;
+};
+
+export const getByQuery = async (searchValue, page = 1, pageSize = 7) => {
+  const response = await $authHost.post('api/timetable/search', { searchValue, page, pageSize });
+  return response.data;
 };

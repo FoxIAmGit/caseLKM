@@ -27,10 +27,12 @@ const Main = () => {
       const fetchData = async () => {
           try {
               const avg = await fetchAvgRate();
-              setAverageScore(avg);
-              console.log(avg);
-              
-              
+              if(avg !== "NaN"){
+                setAverageScore(avg);
+              } else {
+                setAverageScore(0);
+              }
+                            
               const goals = await fetchGoalsToday();
               setGoalCount(goals ? goals : 0); // Обрабатываем случай, если goals undefined
 
@@ -39,6 +41,7 @@ const Main = () => {
               
               const scheduleData = await fetchLessonsToday(); 
               setSchedule(scheduleData.rows || []); // Убедитесь, что это массив
+              console.log(scheduleData)
           } catch (error) {
               console.error("Ошибка при получении данных:", error);
           }

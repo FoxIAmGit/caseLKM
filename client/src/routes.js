@@ -61,6 +61,10 @@ export const authRoutes = [
     path: TIMETABLE,
     Component: Timetable,
   },
+  {
+    path: ZERO,
+    Component: Zero,
+  }
 ];
 
 export const publicRoutes = [

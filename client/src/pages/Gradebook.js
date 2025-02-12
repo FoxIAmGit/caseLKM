@@ -60,14 +60,14 @@ export default function Gradebook() {
     <Container className="my-5">
       <h1 className="text-center mb-3">Успеваемость</h1>
 
-      <Card className="text-center shadow-sm mb-3">
+      <Card className="text-center shadow-sm mb-3" style={{ borderRadius: "25px" }}>
         <Row className="mb-3 justify-content-between align-items-center">
           <Col>
             <Card.Title
               className="mb-0"
               style={{
                 fontWeight: "bold",
-                fontSize: "1.5rem",
+                fontSize: "2.5rem",
               }}
             >
               Средний балл
@@ -87,16 +87,16 @@ export default function Gradebook() {
         </Row>
       </Card>
 
-      <Card className="shadow-sm">
+      <Card className="shadow-sm d-flex flex-column" style={{ borderRadius: "25px" }}>
         <Card.Body>
           {grades.length === 0 ? (
             <Alert variant="info">Нет оценок для отображения.</Alert>
           ) : (
             grades.map((field) => (
               <Row key={field.id} className="mb-2">
-                <Col md={9}>{field.subject.name}</Col>
+                <Col className="ml-3" md={8}>{field.subject.name}</Col>
                 <Col md={2} className="fw-bold">{field.subject.type_exam}</Col>
-                <Col md={1}>{field.mark}</Col>
+                <Col className="mr-3" md={1}>{field.mark}</Col>
               </Row>
             ))
           )}

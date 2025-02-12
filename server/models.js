@@ -5,6 +5,7 @@ const Jobs = sequelize.define("job", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING },
   descript: { type: DataTypes.STRING },
+  location: { type: DataTypes.STRING },
 });
 
 const Companies = sequelize.define("company", {
@@ -66,7 +67,6 @@ const Gradebook = sequelize.define("grade", {
 
 const Materials = sequelize.define("material", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  title: { type: DataTypes.STRING },
   title_file: { type: DataTypes.STRING },
   name_file: { type: DataTypes.STRING },
   type_work: { type: DataTypes.STRING },

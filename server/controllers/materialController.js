@@ -1,8 +1,9 @@
 const errors = require("../errors");
 const uuid = require("uuid");
 const path = require("path");
+const { Op } = require('sequelize');
 
-const { Materials, Edu_plan, Students, Teachers } = require("../models");
+const { Materials, Edu_plan, Students, Teachers, Groups } = require("../models");
 class materialController {
   async getSubject(req, res, next){
     try {
@@ -10,14 +11,20 @@ class materialController {
       switch (req.user.role) {
         case 'student':
           subjects = await Edu_plan.findAll({
-            include: [{ model: Students, 
-              where: { userId: req.user.id } }],
+            include: [{
+              model: Groups,
+              include: [{
+                model: Students,
+                where: { userId: req.user.id }, // Условия теперь здесь
+              }],
+            }],
+            order : ["name"]
           });
           break;
         case 'teacher':
           subjects = await Edu_plan.findAll({
             include: [{ model: Teachers, 
-              where: { userId: req.user.id } }],
+              where: { userId: req.user.id } }],  order : ["name"]
           });
         break;
         default:
@@ -29,6 +36,7 @@ class materialController {
       next(errors.badRequest(e.message));
     }
   }
+
   async create(req, res, next) {
     try {
       const userId = req.user.id;
@@ -69,7 +77,8 @@ class materialController {
     try {
       const userId = req.user.id;
       const maretials = await Materials.findAndCountAll({
-        where: { userId: userId },
+        include : Edu_plan,
+        where: { userId: userId },  order : ["createdAt"]
       });
       return res.json(maretials);
     } catch (e) {
@@ -79,10 +88,12 @@ class materialController {
 
   async getStudWork(req, res, next) {
     try {
-      const userId = req.user.id;
-      const maretials = await Materials.findAndCountAll({
-        include: [{ model: Edu_plan, where: { teacherId: userId } }],
+      const teacher = await Teachers.findOne({ where: {userId : req.user.id }});
+      const maretials = await Materials.findAll({
+        include: [{ model: Edu_plan, where: { teacherId: teacher.id } }],
+        where: { userId: { [Op.ne]: req.user.id }},  order : ["createdAt"]
       });
+      
       return res.json(maretials);
     } catch (e) {
       next(errors.badRequest(e.message));
@@ -91,15 +102,18 @@ class materialController {
 
   async getEduWork(req, res, next) {
     try {
-      const student = await Students.findOne({ where: req.user.id });
-      const maretials = await Materials.findAndCountAll({
+      const student = await Students.findOne({ where: {userId : req.user.id }});
+      const maretials = await Materials.findAll({
         include: [{ model: Edu_plan, where: { groupId: student.groupId } }],
+        where: { userId: { [Op.ne]: req.user.id }},  order : ["createdAt"]
       });
       return res.json(maretials);
     } catch (e) {
       next(errors.badRequest(e.message));
     }
   }
+
+  
 }
 
 module.exports = new materialController();

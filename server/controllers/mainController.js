@@ -78,9 +78,10 @@ class mainController {
                 }
               ]
             }
-          ]
+          ],
+          order : ["num_les"]
         });
-
+        
         return res.json({ count: lessons.count, rows: lessons.rows });
     } catch (e) {
         return next(errors.badRequest(e.message));
@@ -102,7 +103,7 @@ class mainController {
           start_date: { [Op.lt]: startOfDay }, // Начальная дата раньше чем начало дня
           end_date: { [Op.gt]: endOfDay }, // Конечная дата позже чем конец дня
           userId: req.user.id,
-        },
+        }, 
       });
       return res.json( tasks.count );
     } catch (e) {

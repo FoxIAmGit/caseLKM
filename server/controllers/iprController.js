@@ -35,7 +35,7 @@ class iprController {
           start_date: { [Op.lt]: startOfDay }, // Начальная дата раньше чем начало дня
           end_date: { [Op.gt]: endOfDay }, // Конечная дата позже чем конец дня
           userId: req.user.id,
-        },
+        }, order : ["start_date"]
       });
       return res.json(tasks);
     } catch (e) {

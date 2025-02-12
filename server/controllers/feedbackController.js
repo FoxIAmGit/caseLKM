@@ -18,7 +18,7 @@ class feedbackController {
   async getAll(req, res, next) {
     try {
       const userId = req.user.id;
-      const reviews = await Feedback.findAndCountAll({ where: {userId : userId} });
+      const reviews = await Feedback.findAndCountAll({ where: {userId : userId} }, {order : ["updatedAt"]});
       return res.json(reviews);
     } catch (e) {
       next(errors.badRequest(e.message));

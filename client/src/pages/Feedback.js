@@ -137,7 +137,7 @@ export default function Feedback() {
                 <Row>
                   <Col>
                 <Card.Text>{feedback.message}</Card.Text>
-                <Card.Subtitle className="mt-1 text-muted">{`Создано: ${feedback.createdAt}`}</Card.Subtitle>
+                <Card.Subtitle className="mt-1 text-muted">{`Создано: ${feedback.createdAt.split("T")[0]}`}</Card.Subtitle>
                 </Col>
                 <Col>
                 <Button variant="danger" onClick={() => handleDelete(feedback.id)}>

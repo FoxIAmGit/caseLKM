@@ -23,7 +23,9 @@ class ratingController {
           }
           grades = await Gradebook.findAndCountAll({
             include: [{model: Edu_plan}],
-            where: { studentId: student.id }});
+            where: { studentId: student.id }}),  
+            {order : ["$subjects.name$"]}
+            ;
           break;
 
         case "teacher":
