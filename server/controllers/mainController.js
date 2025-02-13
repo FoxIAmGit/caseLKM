@@ -14,21 +14,17 @@ const { Op } = require("sequelize");
 class mainController {
   async getAvgRate(req, res, next) {
     try {
-        // Находим студента по id пользователя
         const student = await Students.findOne({ where: { userId: req.user.id } });
 
-        // Если студент не найден, вернем ошибку
         if (!student) {
             return res.status(404).json({ message: "Student not found" });
         }
 
-        // Получаем средний балл
         const avg = await Gradebook.findOne({
             where: { studentId: student.id },
             attributes: [[sequelize.fn("AVG", sequelize.col("mark")), "avg_rate"]],
         });
 
-        // Если средний балл не найден, возвращаем 0 или соответствующее сообщение
         const averageGrade = avg ? parseFloat(avg.get("avg_rate")).toFixed(1) : 0;
         
         return res.json({ avg_rate: averageGrade });
@@ -91,17 +87,15 @@ class mainController {
   async getipr(req, res, next) {
     try {
       const day = new Date();
-      // Приводим переданную дату к началу дня
       const startOfDay = new Date(day);
       startOfDay.setHours(0, 0, 0, 0);
 
-      // Приводим переданную дату к концу дня
       const endOfDay = new Date(day);
       endOfDay.setHours(23, 59, 59, 999);
       const tasks = await IPR.findAndCountAll({
         where: {
-          start_date: { [Op.lt]: startOfDay }, // Начальная дата раньше чем начало дня
-          end_date: { [Op.gt]: endOfDay }, // Конечная дата позже чем конец дня
+          start_date: { [Op.lt]: startOfDay }, 
+          end_date: { [Op.gt]: endOfDay }, 
           userId: req.user.id,
         }, 
       });

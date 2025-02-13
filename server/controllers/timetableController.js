@@ -17,18 +17,16 @@ class TimetableController {
       let { page } = req.query;
       page = page || 1;
 
-      // Получаем текущую дату
       const currentDate = new Date();
       const startOfWeek = new Date(currentDate);
       startOfWeek.setHours(0, 0, 0, 0);
-      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); // Начало недели (понедельник)
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); 
 
-      // Рассчитываем начало и конец недели для страницы
       const weekStartDate = new Date(startOfWeek);
-      weekStartDate.setDate(weekStartDate.getDate() + (page - 1) * 7); // Скользим на количество недель
+      weekStartDate.setDate(weekStartDate.getDate() + (page - 1) * 7); 
 
       const weekEndDate = new Date(weekStartDate);
-      weekEndDate.setDate(weekStartDate.getDate() + 6); // Конец недели (воскресенье)
+      weekEndDate.setDate(weekStartDate.getDate() + 6); 
 
       let searchCriteria = {};
       switch (req.user.role) {
@@ -56,18 +54,16 @@ class TimetableController {
 
   async getAllbyDate(req, res, next) {
     try {
-      const { page } = req.body || 1; // Ожидаем, что дата будет передана в формате YYYY-MM-DD
+      const { page } = req.body || 1; 
       
-      // Получаем указанную дату и вычисляем начало этой недели
       const targetDate = new Date();
       const startOfWeek = new Date(targetDate);
       startOfWeek.setHours(0, 0, 0, 0);
-      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); // Начало недели (понедельник)
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); 
 
-      // Применяем пагинацию на основе номера недели, которая начинается с указанной даты
       const weekStartDate = new Date(startOfWeek);
       const weekEndDate = new Date(weekStartDate);
-      weekEndDate.setDate(weekStartDate.getDate() + 6); // Конец недели (воскресенье)
+      weekEndDate.setDate(weekStartDate.getDate() + 6); 
       
       let searchCriteria = {};
       switch (req.user.role) {
@@ -95,40 +91,36 @@ class TimetableController {
   async getbyQuery(req, res, next) {
     try {
       const { searchValue } = req.body;
-      const { page = 1, pageSize = 7 } = req.params; // Получаем параметры поиска и пагинации
+      const { page = 1, pageSize = 7 } = req.params;
       const currentDate = new Date();
-      currentDate.setHours(0, 0, 0, 0); // Устанавливаем время на начало дня
+      currentDate.setHours(0, 0, 0, 0); 
 
-      const conditions = { date: { [Op.gte]: currentDate } }; // Уроки, начиная с текущей даты
+      const conditions = { date: { [Op.gte]: currentDate } }; 
 
-      // Проверяем, является ли searchValue id преподавателя или группы
       const isTeacherId = await Teachers.findOne({
         where: { id: searchValue },
       });
       const isGroupId = await Groups.findOne({ where: { id: searchValue } });
 
       if (isTeacherId) {
-        conditions.teacherId = searchValue; // Фильтруем по преподавателю
+        conditions.teacherId = searchValue; 
       } else if (isGroupId) {
-        conditions.groupId = searchValue; // Фильтруем по группе
+        conditions.groupId = searchValue; 
       } else {
         return res
           .status(404)
           .json({ message: "Преподаватель или группа не найдены" });
       }
 
-      // Определяем количество записей, которые нужно пропустить для текущей страницы
       const offset = (page - 1) * pageSize;
 
-      // Запрашиваем расписание из базы данных с учетом пагинации
       const { count, rows: lessons } = await Timetable.findAndCountAll({
         include: { Edu_plan, where: { conditions } },
-        order: [["date", "ASC"]], // Сортируем по дате
+        order: [["date", "ASC"]], 
         limit: pageSize,
         offset: offset,
       });
 
-      // Возвращаем результат с пагинацией
       return res.json({
         totalItems: count,
         totalPages: Math.ceil(count / pageSize),
@@ -158,18 +150,16 @@ class TimetableController {
           console.log("Найдено ФИО преподавателя:", searchTeacher);
       }
 
-      // Получаем текущую дату
       const currentDate = new Date();
       const startOfWeek = new Date(currentDate);
       startOfWeek.setHours(0, 0, 0, 0);
-      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); // Начало недели (понедельник)
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); 
 
-      // Рассчитываем начало и конец недели для страницы
       const weekStartDate = new Date(startOfWeek);
-      weekStartDate.setDate(weekStartDate.getDate() + (page - 1) * 7); // Скользим на количество недель
+      weekStartDate.setDate(weekStartDate.getDate() + (page - 1) * 7); 
 
       const weekEndDate = new Date(weekStartDate);
-      weekEndDate.setDate(weekStartDate.getDate() + 6); // Конец недели (воскресенье)
+      weekEndDate.setDate(weekStartDate.getDate() + 6); 
       
       let searchCriteria = {};
 

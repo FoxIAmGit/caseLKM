@@ -34,7 +34,6 @@ class adminController {
          include: {model: Users, required: true}        
         }, 
       );
-      console.log(teacher)
       if (!teacher) {
         return next(errors.badRequest("Такого преподавателя нет"));
       }
@@ -57,8 +56,8 @@ class adminController {
                     include: [
                         {
                             model: Users,
-                            attributes: ['full_name'], // Указываем, что хотим получить только `full_name`
-                            as: 'user', // Убедитесь, что вы используете правильный псевдоним
+                            attributes: ['full_name'], 
+                            as: 'user', 
                         }
                     ],
                     attributes: ['id'], 
@@ -70,20 +69,15 @@ class adminController {
         if (!faculties || faculties.length === 0) {
             return next(errors.badRequest("Факультеты еще не созданы"));
         }
-
-        // Преобразуем результат в более удобный для вывода формат
+        
         const formattedFaculties = faculties.map(faculty => {
             return {
                 id: faculty.id, 
                 cipher: faculty.cipher, 
                 full_name: faculty.full_name,
-                // Получаем имена всех учителей и объединяем их в строку
                 teach_names: faculty.teacher.user.full_name
             };
         });
-        
-        console.log(JSON.stringify(faculties, null, 2)); // Для отладки
-        
         return res.json(formattedFaculties);
     } catch (e) {
         next(errors.badRequest(e.message));
@@ -291,7 +285,6 @@ class adminController {
         where: { cipher: cipher },
       });
 
-      // Если группа не найдена, обработайте ошибку
       if (!group) {
         return next(errors.badRequest("Группа не найдена."));
       }
@@ -300,7 +293,6 @@ class adminController {
         where: { name: name, groupId: group.id },
       });
 
-      // Если предмет не найден, обработайте ошибку
       if (!subject) {
         return next(errors.badRequest("Предмет не найден"));
       }

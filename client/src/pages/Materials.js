@@ -11,8 +11,6 @@ import { Context } from "../index";
 import AddMaterial from "../components/AddMaterial"
 import "../components/css/Materials.css";
 
-
-
 const MaterialItem = ({ field }) => (
   <Card.Body className="material-item">
     <Row>

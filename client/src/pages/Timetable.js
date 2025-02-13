@@ -4,7 +4,7 @@ import {
     Col,
     Row,
   } from "react-bootstrap";
-import {getAll} from '../http/authAPI'; // Импортируйте API
+import {getAll} from '../http/authAPI'; 
 import "../components/css/Timetable.css";
 
 const pairTimes = {
@@ -15,7 +15,6 @@ const pairTimes = {
     5: "16:20 - 17:55",
     6: "18:05 - 19:40",
     7: "19:50 - 21:15",
-    // Добавьте другие пары по мере необходимости
 };
 
 const pairDay = {
@@ -26,13 +25,12 @@ const pairDay = {
     5: "Пятница",
     6: "Суббота",
     7: "Воскресенье",
-    // Добавьте другие пары по мере необходимости
 };
 
 const Schedule = () => {
   const [currentWeek, setCurrentWeek] = useState(0);
   const [searchText, setSearchText] = useState("");
-  const [schedule, setSchedule] = useState([]); // Инициализация как пустой массив
+  const [schedule, setSchedule] = useState([]); 
 
   const fetchSchedule = useCallback(async () => {
     try {
@@ -44,7 +42,7 @@ const Schedule = () => {
         console.error('Error fetching schedule:', error);
         setSchedule([]);
     }
-    }, [currentWeek, searchText]); // Установите зависимости для fetchSchedule
+    }, [currentWeek, searchText]); 
 
     useEffect(() => {
         fetchSchedule();
@@ -78,7 +76,6 @@ const Schedule = () => {
               <button className="week-button" key={"prev"} onClick={previousWeek}>
                   Предыдущая неделя
               </button>
-              <p>{currentWeek+1}</p>
               <button className="week-button" key={"next"} onClick={nextWeek}>
                   Следующая неделя
               </button>

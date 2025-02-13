@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import "./css/Calendar.css"; // Импортируем стили
+import "./css/Calendar.css"; 
 
-// Массив с названиями месяцев
 const months = [
   "Январь",
   "Февраль",
@@ -17,17 +16,14 @@ const months = [
   "Декабрь",
 ];
 
-// Функция для получения количества дней в месяце
 const getDaysInMonth = (year, month) => {
   return new Date(year, month + 1, 0).getDate();
 };
 
-// Основной компонент Календаря
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
-  // Функция для смены месяца
   const changeMonth = (delta) => {
     const newMonth = currentMonth + delta;
     if (newMonth < 0) {
@@ -41,11 +37,9 @@ const Calendar = () => {
     }
   };
 
-  // Получаем количество дней и первый день месяца
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
 
-  // Создаем массив дней для отображения
   const days = [...Array(daysInMonth).keys()].map((day) => day + 1);
 
   return (
@@ -62,17 +56,14 @@ const Calendar = () => {
         </button>
       </div>
       <div className="calendar-grid">
-        {/* Заголовки дней недели */}
         {["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"].map((day) => (
           <div key={day} className="day-header">
             <strong>{day}</strong>
           </div>
         ))}
-        {/* Пустые ячейки для выравнивания первого дня месяца */}
         {Array.from({ length: firstDay }).map((_, index) => (
           <div key={index} className="empty-cell"></div>
         ))}
-        {/* Отображаем дни месяца */}
         {days.map((day) => (
           <div key={day} className="day-cell">
             {day}

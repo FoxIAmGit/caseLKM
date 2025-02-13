@@ -17,7 +17,7 @@ export default function FacultyAdmin() {
   const { faculty } = useContext(Context);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
-
+  const {user} = useContext(Context)
   const [newFacultyCipher, setNewFacultyCipher] = useState("");
   const [newFacultyName, setNewFacultyName] = useState("");
   const [addLoading, setAddLoading] = useState(false);

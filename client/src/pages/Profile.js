@@ -201,13 +201,13 @@ export default function Profile() {
               <Card.Body>
                 <Card.Title align="center">Сведения о движении</Card.Title>
                 <Card.Text align="center">
-                  <Row>
-                    <Col md={8}><strong>Факультет:</strong></Col>
-                    <Col md={4}>{stud.departments?.length > 0 ? stud.departments[0]?.faculty?.full_name || 'Факультет не указан' : 'Факультет не указан'}</Col>
-                  </Row>
-                  <Row> 
-                    <Col md={8}><strong>Кафедра:</strong></Col>
-                    <Col md={4}>{stud.departments?.length > 0 ? stud.departments[0]?.name || 'Кафедра не указана' : 'Кафедра не указана'}</Col>
+                  <Row className="mb-3 d-flex justify-content-between align-items-center">
+                    <Col md={4}><strong>Факультет:</strong></Col>
+                    <Col md={8}>{stud.departments?.length > 0 ? stud.departments[0]?.faculty?.full_name || 'Факультет не указан' : 'Факультет не указан'}</Col>
+                  </Row >
+                  <Row className="d-flex justify-content-between align-items-center"> 
+                    <Col md={4}><strong>Кафедра:</strong></Col>
+                    <Col md={8}>{stud.departments?.length > 0 ? stud.departments[0]?.name || 'Кафедра не указана' : 'Кафедра не указана'}</Col>
                   </Row> 
                 </Card.Text>
               </Card.Body>

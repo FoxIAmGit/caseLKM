@@ -21,17 +21,17 @@ export const fetchGrades = async () => {
 };
 
 export const submitGrade = async (id, gradeData) => {
-  const response = await $authHost.put(`/api/rating${id}`, gradeData); // Убедитесь, что URL соответствует вашему API
+  const response = await $authHost.put(`/api/rating${id}`, gradeData); 
   return response.data;
 };
 
 export const fetchTasks = async (date) => {
   try {
-    const response = await $authHost.get(`/api/ipr/${date}`); // Передаем дату в качестве параметра
+    const response = await $authHost.get(`/api/ipr/${date}`); 
     return response.data;
   } catch (error) {
     console.error("Ошибка при получении задач:", error);
-    throw error; // Перебрасываем ошибку для обработки в компоненте
+    throw error; 
   }
 };
 
@@ -70,19 +70,16 @@ export const fetchAvgRate = async () => {
   return response.data.avg_rate;
 };
 
-// Получение количества уроков на сегодня
 export const fetchCountLessonsToday = async () => {
   const response = await $authHost.get(`api/main/les`);
   return response.data;
 };
  
-// Получение уроков на сегодня
 export const fetchLessonsToday = async () => {
   const response = await $authHost.get(`api/main/les`);
   return response.data;
 };
 
-// Получение количества целей на сегодня
 export const fetchGoalsToday = async () => {
   const response = await $authHost.get(`api/main/ipr`);
   return response.data;

@@ -4,7 +4,6 @@ import { Context } from "../index";
 import { fetchAvgRate, fetchLessonsToday, fetchCountLessonsToday, fetchGoalsToday } from "../http/authAPI"; 
 import "../components/css/Main.css";
 
-// Словарь времени для каждой пары
 const pairTimes = {
   1: "8:45 - 10:20",
   2: "10:30 - 12:05",
@@ -13,7 +12,6 @@ const pairTimes = {
   5: "16:20 - 17:55",
   6: "18:05 - 19:40",
   7: "19:50 - 21:15",
-  // Добавьте другие пары по мере необходимости
 };
 
 const Main = () => {
@@ -26,21 +24,22 @@ const Main = () => {
   useEffect(() => {
       const fetchData = async () => {
           try {
+            if(user._user.role === "student") {
               const avg = await fetchAvgRate();
               if(avg !== "NaN"){
                 setAverageScore(avg);
               } else {
                 setAverageScore(0);
               }
-                            
+            }               
               const goals = await fetchGoalsToday();
-              setGoalCount(goals ? goals : 0); // Обрабатываем случай, если goals undefined
+              setGoalCount(goals ? goals : 0); 
 
               const lessonsCount = await fetchCountLessonsToday();
               setLessonCount(lessonsCount.count);
               
               const scheduleData = await fetchLessonsToday(); 
-              setSchedule(scheduleData.rows || []); // Убедитесь, что это массив
+              setSchedule(scheduleData.rows || []); 
               console.log(scheduleData)
           } catch (error) {
               console.error("Ошибка при получении данных:", error);
@@ -88,7 +87,7 @@ const Main = () => {
                           <h3>Расписание на сегодня</h3>
                       </Card.Title>
                   </Card.Body>
-                  {Array.isArray(schedule) && schedule.length > 0 ? ( // Проверка на массив и длину
+                  {Array.isArray(schedule) && schedule.length > 0 ? ( 
                       schedule.map((pair) => (
                           <Card key={pair.id} className="schedule-item mb-1">
                               <Card.Body>

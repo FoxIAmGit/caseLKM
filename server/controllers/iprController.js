@@ -23,17 +23,16 @@ class iprController {
   async getAll(req, res, next) {
     try {
       const { day } = req.params;
-      // Приводим переданную дату к началу дня
+
       const startOfDay = new Date(day);
       startOfDay.setHours(0, 0, 0, 0);
 
-      // Приводим переданную дату к концу дня
       const endOfDay = new Date(day);
       endOfDay.setHours(23, 59, 59, 999);
       const tasks = await IPR.findAll({
         where: {
-          start_date: { [Op.lt]: startOfDay }, // Начальная дата раньше чем начало дня
-          end_date: { [Op.gt]: endOfDay }, // Конечная дата позже чем конец дня
+          start_date: { [Op.lt]: startOfDay }, 
+          end_date: { [Op.gt]: endOfDay }, 
           userId: req.user.id,
         }, order : ["start_date"]
       });
@@ -71,7 +70,6 @@ class iprController {
 
       await IPR.update(updates, { where: { id } });
 
-      // Получаем обновленную запись
       const updatedTask = await IPR.findOne({ where: { id } });
       return res.json(updatedTask);
     } catch (e) {

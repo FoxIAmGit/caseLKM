@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Nav, Row } from "react-bootstrap";
 import { Context } from "../index";
 import "../components/css/Practic.css";
-import { fetchAllVacancies, fetchMyVacancies, applyForVacancy } from "../http/authAPI"; // Предположим, что у вас есть этот метод
+import { fetchAllVacancies, fetchMyVacancies, applyForVacancy } from "../http/authAPI"; 
 
 export default function Practic() {
   const { user } = useContext(Context);
@@ -28,7 +28,7 @@ export default function Practic() {
 
   const handleApply = async (vacancyId) => {
     try {
-      await applyForVacancy(vacancyId); // Предположим, что эта функция отправляет запрос на сервер
+      await applyForVacancy(vacancyId);
       alert("Вы успешно откликнулись на вакансию!");
     } catch (e) {
       alert("Ошибка при отклике на вакансию: " + e.message);

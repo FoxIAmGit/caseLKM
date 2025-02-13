@@ -16,7 +16,6 @@ class userController {
     try {
       const { email, phone, password, role, full_name, belonging } = req.body;
 
-      // Проверка существующего пользователя по email или телефону
       const findUser = await Users.findOne({
         where: { [Op.or]: [{ email }, { phone }] },
       });
@@ -27,9 +26,7 @@ class userController {
         );
       }
 
-      // Хеширование пароля
       const hashPassword = await bcrypt.hash(password, 5);
-      // Создание нового пользователя
       const user = await Users.create({
         email,
         phone,
@@ -64,7 +61,6 @@ class userController {
           break;
       }
 
-      // Возврат токена
       return res.json({ token });
     } catch (e) {
       return next(
@@ -80,16 +76,13 @@ class userController {
 
     let searchCriteria = {};
 
-    // Регулярные выражения для проверки
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex =
       /^(\+7|8)\s*[\(]?\d{3}[\)]?\s*\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
 
     if (emailRegex.test(login)) {
-      // Если это email
       searchCriteria = { email: login };
     } else if (phoneRegex.test(login)) {
-      // Если это телефон
       searchCriteria = { phone: login };
     } else {
       return next(

@@ -36,7 +36,7 @@ export default function AddMaterial() {
   const [selectedSubject, setSelectedSubject] = useState(null);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true); // Обработчик для открытия модального окна
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +76,7 @@ export default function AddMaterial() {
 
     try {
       await createMaterials(materialData);
-      handleClose(); // Закрываем модальное окно после успешной отправки
+      handleClose(); 
     } catch (error) {
       console.error("Ошибка при создании материала:", error);
     }

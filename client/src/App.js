@@ -24,7 +24,7 @@ const App = observer(() => {
         console.log(user);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [user]);
 
   if (loading) {
     return <Spinner animation={"grow"} />;

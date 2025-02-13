@@ -15,7 +15,7 @@ class materialController {
               model: Groups,
               include: [{
                 model: Students,
-                where: { userId: req.user.id }, // Условия теперь здесь
+                where: { userId: req.user.id },
               }],
             }],
             order : ["name"]
@@ -44,18 +44,14 @@ class materialController {
       const { file } = req.files;
 
       if (!file) {
-        // Проверка наличия файла
         return next(errors.badRequest({ message: "Загрузите файл!" }));
       }
 
-      // Генерация имени файла
-      const name_file = uuid.v4() + path.extname(file.name); // Используем оригинальное расширение файла
+      const name_file = uuid.v4() + path.extname(file.name); 
       const title_file = file.name;
 
-      // Перемещение файла
       await file.mv(path.resolve(__dirname, "..", "static", name_file));
       console.log(title, type_work, descript, semester, subjectId)
-      // Создание устройства в базе данных
       const material = await Materials.create({
         title,
         title_file,
@@ -67,7 +63,7 @@ class materialController {
         userId,
       });
       
-      return res.json(material); // Возврат созданного устройства
+      return res.json(material); 
     } catch (e) {
       next(errors.badRequest(e.message));
     }
@@ -111,9 +107,7 @@ class materialController {
     } catch (e) {
       next(errors.badRequest(e.message));
     }
-  }
-
-  
+  } 
 }
 
 module.exports = new materialController();

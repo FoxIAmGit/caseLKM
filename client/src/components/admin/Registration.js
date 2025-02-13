@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Modal, Spinner } from "react-bootstrap";
-import { createUser } from "../../http/adminAPI"; // Импортируем функцию для создания пользователя
+import { createUser } from "../../http/adminAPI";
 
 export default function CreateUserModal({ show, onHide }) {
   const [email, setEmail] = useState("");

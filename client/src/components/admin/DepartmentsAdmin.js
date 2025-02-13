@@ -69,7 +69,7 @@ export default function DepartmentsAdmin() {
 
   return (
     <Container className="mb-3 p-1 justify-content-between">
-      <h3  className="mb-3">Добавить новый факультет</h3>
+      <h3  className="mb-3">Добавить новую кафедру</h3>
       <Form inline style={{ marginBottom: "20px" }}>
         <Form.Control
           type="text"
@@ -80,7 +80,7 @@ export default function DepartmentsAdmin() {
         />
         <Form.Control
           type="text"
-          placeholder="Полное название факультета"
+          placeholder="Название кафедры"
           value={newDeptName}
           onChange={(e) => setNewDeptName(e.target.value)}
           className="mr-2 mb-3"

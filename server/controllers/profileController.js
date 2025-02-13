@@ -69,7 +69,6 @@ class profileController {
       const { file } = req.files;
 
       if (!file) {
-        // Проверка наличия файла
         return next(errors.badRequest({ message: "Загрузите файл!" }));
       }
 
@@ -81,7 +80,7 @@ class profileController {
         { where: { userId: id } },
       );
 
-      return res.json(student); // Возврат созданного устройства
+      return res.json(student); 
     } catch (e) {
       next(errors.badRequest(e.message));
     }

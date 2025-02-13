@@ -1,6 +1,5 @@
-// IPR.js
-import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Form, Nav, Row } from "react-bootstrap";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Calendar from "../components/Calendar";
 import { fetchTasks, createTask, updateTask, deleteTask } from "../http/authAPI"; 
 
@@ -18,18 +17,18 @@ export default function Ipr() {
     new Date().toISOString().split("T")[0]
   );
 
-  useEffect(() => {
-    fetchTasksData();
-  }, [selectedDate]); // Загружаем задачи при изменении выбранной даты
-
-  const fetchTasksData = async () => {
+  const fetchTasksData = useCallback(async () => {
     try {
-      const data = await fetchTasks(selectedDate); // Используем функцию для получения задач для выбранной даты.
+      const data = await fetchTasks(selectedDate); 
       setTasks(data);
     } catch (error) {
       console.error("Ошибка при получении задач:", error);
     }
-  };
+  }, [selectedDate]);
+
+  useEffect(() => {
+    fetchTasksData();
+  }, [fetchTasksData]); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,7 +43,7 @@ export default function Ipr() {
       } else {
         await createTask(newTask);
       }
-      fetchTasksData(); // Обновление списка задач
+      fetchTasksData(); 
       resetNewTask();
     } catch (error) {
       console.error("Ошибка при отправке задачи:", error);
@@ -65,7 +64,7 @@ export default function Ipr() {
   const handleDelete = async (id) => {
     try {
       await deleteTask(id);
-      fetchTasksData(); // Обновление списка задач после удаления
+      fetchTasksData(); 
     } catch (error) {
       console.error("Ошибка при удалении задачи:", error);
     }

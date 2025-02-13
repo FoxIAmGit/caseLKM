@@ -31,7 +31,6 @@ class practicController {
         where: { groupId: student.groupId },  order : ["createdAt"]
       });
       
-      
       return res.json(vacancies);
     } catch (e) {
       next(errors.badRequest(e.message));

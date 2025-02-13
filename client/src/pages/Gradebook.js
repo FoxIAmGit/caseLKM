@@ -94,7 +94,8 @@ export default function Gradebook() {
           ) : (
             grades.map((field) => (
               <Row key={field.id} className="mb-2">
-                <Col className="ml-3" md={8}>{field.subject.name}</Col>
+                <Col className="ml-3" md={6}>{field.subject.name}</Col>
+                <Col md={2} className="fw-bold">{`${field.subject.semester} семестр`}</Col>
                 <Col md={2} className="fw-bold">{field.subject.type_exam}</Col>
                 <Col className="mr-3" md={1}>{field.mark}</Col>
               </Row>
