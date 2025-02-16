@@ -6,7 +6,6 @@ class feedbackController {
   async create(req, res, next) {
     try {
       const { title, message } = req.body;
-      console.log("Received feedback:", req.body);
       const userId = req.user.id;
       const review = await Feedback.create({ title, message, userId });
       return res.json(review);

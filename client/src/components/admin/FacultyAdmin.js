@@ -17,7 +17,6 @@ export default function FacultyAdmin() {
   const { faculty } = useContext(Context);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
-  const {user} = useContext(Context)
   const [newFacultyCipher, setNewFacultyCipher] = useState("");
   const [newFacultyName, setNewFacultyName] = useState("");
   const [addLoading, setAddLoading] = useState(false);
@@ -25,7 +24,6 @@ export default function FacultyAdmin() {
   const handleShow = (facId) => {
     setSelectedFacultyId(facId);
     setShow(true);
-    console.log("facId: " + facId);
   };
 
   useEffect(() => {
@@ -35,8 +33,6 @@ export default function FacultyAdmin() {
         faculties.forEach((element) => {
           faculty.addFaculty(element);
         });
-        console.log(faculties);
-        
       } catch (err) {
         alert(err.response?.data?.message || "Ошибка при загрузке факультетов");
       } finally {
@@ -74,7 +70,7 @@ export default function FacultyAdmin() {
       <h3 className="mb-3">Добавить новый факультет</h3>
       <Form inline style={{ marginBottom: "20px" }}>
         <Form.Control
-          type="text" 
+          type="text"
           placeholder="Шифр факультета"
           value={newFacultyCipher}
           onChange={(e) => setNewFacultyCipher(e.target.value)}
@@ -93,30 +89,38 @@ export default function FacultyAdmin() {
       </Form>
 
       {faculty.faculties.map((fac) => (
-        <Card key={fac.id} data-id={fac.id} className="mb-3 justify-content-between">
+        <Card
+          key={fac.id}
+          data-id={fac.id}
+          className="mb-3 justify-content-between"
+        >
           <Card.Body className="ml-3 justify-content-between">
-          <Row> 
-            <Col>
-              <Row className="mb-3"><h2>{fac.cipher}</h2></Row>
-              <Row>{fac.full_name}</Row>
-            </Col>
-            <Col>
-              <Row className="mb-3"><strong>{fac.teach_names}</strong></Row>
-              <Row>
-                <Button
-                  variant="outline-success"
-                  onClick={() => handleShow(fac.id)}
-                >
-                  Изменить
-                  <UpdaterFaculty
-                    show={show}
-                    onHide={() => setShow(false)}
-                    id={selectedFacultyId}
-                  />
-                </Button>
-              </Row>
-            </Col>
-          </Row>
+            <Row>
+              <Col>
+                <Row className="mb-3">
+                  <h2>{fac.cipher}</h2>
+                </Row>
+                <Row>{fac.full_name}</Row>
+              </Col>
+              <Col>
+                <Row className="mb-3">
+                  <strong>{fac.teach_names}</strong>
+                </Row>
+                <Row>
+                  <Button
+                    variant="outline-success"
+                    onClick={() => handleShow(fac.id)}
+                  >
+                    Изменить
+                    <UpdaterFaculty
+                      show={show}
+                      onHide={() => setShow(false)}
+                      id={selectedFacultyId}
+                    />
+                  </Button>
+                </Row>
+              </Col>
+            </Row>
           </Card.Body>
         </Card>
       ))}

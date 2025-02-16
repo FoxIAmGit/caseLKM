@@ -5,8 +5,8 @@ export const fetchFeedback = async () => {
   return data;
 };
 
-export const createFeedback = async ({title, message}) => {
-  const { data } = await $authHost.post("api/feedback", {title, message});
+export const createFeedback = async ({ title, message }) => {
+  const { data } = await $authHost.post("api/feedback", { title, message });
   return data;
 };
 
@@ -21,17 +21,17 @@ export const fetchGrades = async () => {
 };
 
 export const submitGrade = async (id, gradeData) => {
-  const response = await $authHost.put(`/api/rating${id}`, gradeData); 
+  const response = await $authHost.put(`/api/rating${id}`, gradeData);
   return response.data;
 };
 
 export const fetchTasks = async (date) => {
   try {
-    const response = await $authHost.get(`/api/ipr/${date}`); 
+    const response = await $authHost.get(`/api/ipr/${date}`);
     return response.data;
   } catch (error) {
     console.error("Ошибка при получении задач:", error);
-    throw error; 
+    throw error;
   }
 };
 
@@ -66,7 +66,6 @@ export const deleteTask = async (id) => {
 
 export const fetchAvgRate = async () => {
   const response = await $authHost.get(`api/main/avg`);
-  console.log(response)
   return response.data.avg_rate;
 };
 
@@ -74,7 +73,7 @@ export const fetchCountLessonsToday = async () => {
   const response = await $authHost.get(`api/main/les`);
   return response.data;
 };
- 
+
 export const fetchLessonsToday = async () => {
   const response = await $authHost.get(`api/main/les`);
   return response.data;
@@ -96,74 +95,87 @@ export const createMaterials = async (maretial) => {
 };
 
 export const fetchMaterials = async () => {
-  const response = await $authHost.get("/api/material"); 
+  const response = await $authHost.get("/api/material");
   return response.data.rows;
 };
 
+export const downloadMaterial = async (id) => {
+  $authHost.get(`/api/material/download/${id}`);
+  return;
+};
+
 export const fetchMaterialsForStudent = async () => {
-  const response = await $authHost.get("/api/material/s"); 
+  const response = await $authHost.get("/api/material/s");
   return response.data;
 };
 
 export const fetchMaterialsForTeacher = async () => {
-  const response = await $authHost.get("/api/material/t"); 
+  const response = await $authHost.get("/api/material/t");
   return response.data;
 };
 
 export const fetchSubjects = async () => {
-  const response = await $authHost.get("/api/material/subject"); 
+  const response = await $authHost.get("/api/material/subject");
   return response.data;
 };
 
 export const fetchAllVacancies = async () => {
-  const response = await $authHost.get("/api/practic"); 
+  const response = await $authHost.get("/api/practic");
   return response.data.rows;
 };
 
 export const fetchMyVacancies = async () => {
-  const response = await $authHost.get("/api/practic/my"); 
+  const response = await $authHost.get("/api/practic/my");
   return response.data;
 };
 
 export const applyForVacancy = async (id) => {
-  const response = await $authHost.post(`/api/practic/${id}`); 
+  const response = await $authHost.post(`/api/practic/${id}`);
   return response.data.rows;
 };
 
 export const fetchUser = async () => {
-  const response = await $authHost.get(`/api/profile`); 
+  const response = await $authHost.get(`/api/profile`);
   return response.data;
 };
 
 export const updateUser = async (email, phone, password) => {
-  const response = await $authHost.put(`/api/profile`, {email, phone, password}); 
+  const response = await $authHost.put(`/api/profile`, {
+    email,
+    phone,
+    password,
+  });
   return response.data;
 };
 
 export const addResumeUser = async (file) => {
   const formData = new FormData();
-  formData.append('file', file);
-  
+  formData.append("file", file);
+
   const response = await $authHost.put(`/api/profile/resume`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
     },
   });
-  
+
   return response.data;
 };
 
 export const getAll = async (page, searchText) => {
-  const response = await $authHost.post('api/timetable', {  page, searchText });
+  const response = await $authHost.post("api/timetable", { page, searchText });
   return response.data;
 };
 
 export const getAllByDate = async (page) => {
-  const response = await $authHost.get('api/timetable/date', { page });
+  const response = await $authHost.get("api/timetable/date", { page });
   return response.data;
 };
 
 export const getByQuery = async (searchValue, page = 1, pageSize = 7) => {
-  const response = await $authHost.post('api/timetable/search', { searchValue, page, pageSize });
+  const response = await $authHost.post("api/timetable/search", {
+    searchValue,
+    page,
+    pageSize,
+  });
   return response.data;
 };

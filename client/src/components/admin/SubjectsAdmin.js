@@ -1,8 +1,17 @@
-import React, { useState } from "react";
-import { Button, Form, Modal, Spinner } from "react-bootstrap";
-import { createSubject } from "../../http/adminAPI";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+} from "react-bootstrap";
+import { createSubject, fetchSubject } from "../../http/adminAPI";
 
-export default function CreateSubjectModal({ show, onHide }) {
+export default function CreateSubjectModal() {
+  const [subjects, setSubjects] = useState([]);
   const [name, setName] = useState("");
   const [typeExam, setTypeExam] = useState("");
   const [dateExam, setDateExam] = useState("");
@@ -12,6 +21,21 @@ export default function CreateSubjectModal({ show, onHide }) {
   const [cipher, setCipher] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const getVacancy = async () => {
+      try {
+        const data = await fetchSubject();
+        setSubjects(data);
+      } catch (err) {
+        alert(err.response?.data?.message || "Ошибка при загрузке групп");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getVacancy();
+  }, []);
 
   const handleSave = async () => {
     if (
@@ -39,7 +63,6 @@ export default function CreateSubjectModal({ show, onHide }) {
         full_name: fullName,
         cipher,
       });
-      onHide();
     } catch (e) {
       alert(
         e.response ? e.response.data.message : "Ошибка при добавлении предмета",
@@ -50,87 +73,112 @@ export default function CreateSubjectModal({ show, onHide }) {
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
-      <Modal.Header closeButton>
-        <Modal.Title>Создать новый предмет</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>Название предмета</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Введите название предмета"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Тип экзамена</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Введите тип экзамена"
-              value={typeExam}
-              onChange={(e) => setTypeExam(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Дата экзамена</Form.Label>
-            <Form.Control
-              type="date"
-              value={dateExam}
-              onChange={(e) => setDateExam(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Семестр</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Введите семестр"
-              value={semester}
-              onChange={(e) => setSemester(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Часы</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="Введите количество часов"
-              value={hours}
-              onChange={(e) => setHours(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Полное имя</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Введите полное имя"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Шифр</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Введите шифр"
-              value={cipher}
-              onChange={(e) => setCipher(e.target.value)}
-            />
-            {error && <div className="text-danger">{error}</div>}
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Отменить
-        </Button>
-        <Button variant="primary" onClick={handleSave} disabled={loading}>
+    <Container className="mb-3 p-1 justify-content-between">
+      <h3 className="mb-3">Добавить новый предмет</h3>
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Название предмета</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Введите название предмета"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            autoFocus
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Тип экзамена</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Введите тип экзамена"
+            value={typeExam}
+            onChange={(e) => setTypeExam(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Дата экзамена</Form.Label>
+          <Form.Control
+            type="date"
+            value={dateExam}
+            onChange={(e) => setDateExam(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Семестр</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Введите семестр"
+            value={semester}
+            onChange={(e) => setSemester(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Часы</Form.Label>
+          <Form.Control
+            type="number"
+            placeholder="Введите количество часов"
+            value={hours}
+            onChange={(e) => setHours(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>ФИО преподавателя</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Введите полное имя"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Шифр</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Введите шифр"
+            value={cipher}
+            onChange={(e) => setCipher(e.target.value)}
+          />
+          {error && <div className="text-danger">{error}</div>}
+        </Form.Group>
+        <Button
+          className="mb-3"
+          variant="primary"
+          onClick={handleSave}
+          disabled={loading}
+        >
           Сохранить
           {loading && <Spinner animation="border" size="sm" />}
         </Button>
-      </Modal.Footer>
-    </Modal>
+      </Form>
+
+      {subjects.map((subItem) => (
+        <Card
+          key={subItem.id}
+          data-id={subItem.id}
+          className="mb-3 justify-content-between"
+        >
+          <Card.Body className="ml-3 justify-content-between">
+            <Row className="mb-3">
+              <h2>{subItem.name}</h2>
+            </Row>
+            <Row className="mb-3">
+              <Col md={4}>
+                <i>{subItem.type_exam}</i>
+                <i>{` ${subItem.date_exam.split("T")[0]}`}</i>
+              </Col>
+              <Col md={4}>{`${subItem.hours} часов`}</Col>
+            </Row>
+            <Row>
+              <Col>
+                <b>{subItem.teacher.user.full_name}</b>
+              </Col>
+              <Col>
+                <b>{subItem.group.cipher}</b>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      ))}
+    </Container>
   );
 }

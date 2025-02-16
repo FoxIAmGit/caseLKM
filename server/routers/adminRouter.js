@@ -16,9 +16,14 @@ router.post("/group", checkRole("admin"), adminController.createGroup);
 router.get("/group", checkRole("admin"), adminController.getGroup);
 
 router.post("/job", checkRole("admin"), adminController.createJob);
+router.get("/job", checkRole("admin"), adminController.getJob);
+
 router.post("/vacancy", checkRole("admin"), adminController.createVacancy);
+router.get("/vacancy", checkRole("admin"), adminController.getVacancy);
 
 router.post("/subject", checkRole("admin"), adminController.createSubject);
+router.get("/subject", checkRole("admin"), adminController.getSubject);
+
 router.post("/lesson", checkRole("admin"), adminController.createLesson);
 
 module.exports = router;

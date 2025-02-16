@@ -34,7 +34,6 @@ export default function DepartmentsAdmin() {
         depts.forEach((element) => {
           dept.addDept(element);
         });
-        console.log(depts);
       } catch (err) {
         alert(err.response?.data?.message || "Ошибка при загрузке факультетов");
       } finally {
@@ -69,7 +68,7 @@ export default function DepartmentsAdmin() {
 
   return (
     <Container className="mb-3 p-1 justify-content-between">
-      <h3  className="mb-3">Добавить новую кафедру</h3>
+      <h3 className="mb-3">Добавить новую кафедру</h3>
       <Form inline style={{ marginBottom: "20px" }}>
         <Form.Control
           type="text"
@@ -91,30 +90,38 @@ export default function DepartmentsAdmin() {
       </Form>
 
       {dept.depts.map((dep) => (
-        <Card key={dep.id} data-id={dep.id} className="mb-3 justify-content-between">
+        <Card
+          key={dep.id}
+          data-id={dep.id}
+          className="mb-3 justify-content-between"
+        >
           <Card.Body className="ml-3 justify-content-between">
-          <Row>
-            <Col>
-              <Row className="mb-3"><h2>{dep.fac_cipher}</h2></Row>
-              <Row>{dep.name}</Row>
-            </Col>
-            <Col>
-              <Row className="mb-3"><strong>{dep.teach_name}</strong></Row>
-              <Row>
-                <Button
-                  variant="outline-success"
-                  onClick={() => handleShow(dep.id)}
-                >
-                  Изменить
-                  <UpdaterDept
-                    show={show}
-                    onHide={() => setShow(false)}
-                    id={selectedDeptId}
-                  />
-                </Button>
-              </Row>
-            </Col>
-          </Row>
+            <Row>
+              <Col>
+                <Row className="mb-3">
+                  <h2>{dep.fac_cipher}</h2>
+                </Row>
+                <Row>{dep.name}</Row>
+              </Col>
+              <Col>
+                <Row className="mb-3">
+                  <strong>{dep.teach_name}</strong>
+                </Row>
+                <Row>
+                  <Button
+                    variant="outline-success"
+                    onClick={() => handleShow(dep.id)}
+                  >
+                    Изменить
+                    <UpdaterDept
+                      show={show}
+                      onHide={() => setShow(false)}
+                      id={selectedDeptId}
+                    />
+                  </Button>
+                </Row>
+              </Col>
+            </Row>
           </Card.Body>
         </Card>
       ))}

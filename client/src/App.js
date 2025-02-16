@@ -21,7 +21,6 @@ const App = observer(() => {
           user.setUser(null);
           user.setIsAuth(false);
         }
-        console.log(user);
       })
       .finally(() => setLoading(false));
   }, [user]);

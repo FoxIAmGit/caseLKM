@@ -10,5 +10,6 @@ router.post("/", user(), materialController.create);
 router.get("/", user(), materialController.getAllMine);
 router.get("/t", checkRole("teacher"), materialController.getStudWork);
 router.get("/s", checkRole("student"), materialController.getEduWork);
+router.get("/download/:id", materialController.downloadMaterial);
 
 module.exports = router;

@@ -13,7 +13,7 @@ export default function CreateUserModal({ show, onHide }) {
   const [error, setError] = useState("");
 
   const handleSave = async () => {
-    if (!email || !phone || !password || !role || !full_name ) {
+    if (!email || !phone || !password || !role || !full_name) {
       setError("Все поля должны быть заполнены");
       return;
     }
@@ -25,7 +25,9 @@ export default function CreateUserModal({ show, onHide }) {
       onHide();
     } catch (e) {
       setError(
-        e.response ? e.response.data.message : "Ошибка при создании пользователя"
+        e.response
+          ? e.response.data.message
+          : "Ошибка при создании пользователя",
       );
     } finally {
       setLoading(false);
@@ -39,7 +41,7 @@ export default function CreateUserModal({ show, onHide }) {
       </Modal.Header>
       <Modal.Body>
         <Form>
-        <Form.Group className="mb-3">
+          <Form.Group className="mb-3">
             <Form.Label>ФИО</Form.Label>
             <Form.Control
               type="text"
@@ -84,7 +86,9 @@ export default function CreateUserModal({ show, onHide }) {
               value={role}
               onChange={(e) => setRole(e.target.value)}
             >
-              <option value="Роль" disabled>Выберите роль</option>
+              <option value="Роль" disabled>
+                Выберите роль
+              </option>
               <option value="student">Студент</option>
               <option value="teacher">Преподаватель</option>
               <option value="admin">Админ</option>

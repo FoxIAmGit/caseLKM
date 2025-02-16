@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./css/Calendar.css"; 
+import "./css/Calendar.css";
 
 const months = [
   "Январь",

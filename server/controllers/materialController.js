@@ -4,6 +4,7 @@ const path = require("path");
 const { Op } = require('sequelize');
 
 const { Materials, Edu_plan, Students, Teachers, Groups } = require("../models");
+const { log } = require("console");
 class materialController {
   async getSubject(req, res, next){
     try {
@@ -51,7 +52,6 @@ class materialController {
       const title_file = file.name;
 
       await file.mv(path.resolve(__dirname, "..", "static", name_file));
-      console.log(title, type_work, descript, semester, subjectId)
       const material = await Materials.create({
         title,
         title_file,
@@ -69,6 +69,18 @@ class materialController {
     }
   }
 
+  async downloadMaterial (req, res, next) {
+    try{
+            
+      const {id} = req.params
+      const material = await Materials.findOne({where: {id: id}})
+      const file = path.resolve(__dirname, "..", "static", material.name_file)
+      
+      return res.download(file, material.title_file)
+    } catch (e){
+      
+    }
+  }
   async getAllMine(req, res, next) {
     try {
       const userId = req.user.id;

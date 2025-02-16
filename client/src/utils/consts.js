@@ -31,6 +31,12 @@ export const menuItemsTeacher = [
   { eventKey: "7", label: "Профиль", path: PROFILE },
 ];
 
+export const menuItemsAdmin = [
+  { eventKey: "1", label: "Админ", path: ADMIN_ROUTE },
+  { eventKey: "2", label: "Расписание", path: TIMETABLE },
+  { eventKey: "3", label: "Профиль", path: PROFILE },
+];
+
 export const semesterData = [
   { num: 1 },
   { num: 2 },

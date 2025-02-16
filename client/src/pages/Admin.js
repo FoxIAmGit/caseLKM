@@ -12,17 +12,11 @@ import SubjectsAdmin from "../components/admin/SubjectsAdmin";
 import ScheduleAdmin from "../components/admin/ScheduleAdmin";
 import Registration from "../components/admin/Registration";
 
-import CreateJobModal from "../components/admin/JobsAdmin";
-import CreateVacancyModal from "../components/admin/VacanciesAdmin";
-import CreateSubjectModal from "../components/admin/SubjectsAdmin";
 import CreateScheduleModal from "../components/admin/ScheduleAdmin";
 import CreateUserModal from "../components/admin/Registration";
 
 const Admin = observer(() => {
   const [selectedCategory, setSelectedCategory] = useState("Факультеты");
-  const [showJobModal, setShowJobModal] = useState(false);
-  const [showVacancyModal, setShowVacancyModal] = useState(false);
-  const [showSubjectModal, setShowSubjectModal] = useState(false);
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [showUserModal, setShowUserModal] = useState(false);
 
@@ -41,15 +35,6 @@ const Admin = observer(() => {
 
   const handleModalOpen = (category) => {
     switch (category) {
-      case "Должность":
-        setShowJobModal(true);
-        break;
-      case "Вакансии":
-        setShowVacancyModal(true);
-        break;
-      case "Предметы":
-        setShowSubjectModal(true);
-        break;
       case "Расписание":
         setShowScheduleModal(true);
         break;
@@ -78,7 +63,7 @@ const Admin = observer(() => {
                       "Вакансии",
                       "Предметы",
                       "Расписание",
-                      "Пользователь"
+                      "Пользователь",
                     ].includes(category)
                   ) {
                     handleModalOpen(category);
@@ -92,22 +77,10 @@ const Admin = observer(() => {
           </ListGroup>
         </Col>
         <Col md={9}>
-          <CurrentComponent  />
+          <CurrentComponent />
         </Col>
       </Row>
 
-      <CreateJobModal
-        show={showJobModal}
-        onHide={() => setShowJobModal(false)}
-      />
-      <CreateVacancyModal
-        show={showVacancyModal}
-        onHide={() => setShowVacancyModal(false)}
-      />
-      <CreateSubjectModal
-        show={showSubjectModal}
-        onHide={() => setShowSubjectModal(false)}
-      />
       <CreateScheduleModal
         show={showScheduleModal}
         onHide={() => setShowScheduleModal(false)}

@@ -28,7 +28,6 @@ export default function GroupsAdmin() {
         groups.forEach((element) => {
           group.addGroup(element);
         });
-        console.log(group);
       } catch (err) {
         alert(err.response?.data?.message || "Ошибка при загрузке групп");
       } finally {
@@ -50,12 +49,12 @@ export default function GroupsAdmin() {
       setAddLoading(true);
       try {
         const newGroup = await createGroup(
-          newGroupFaculty,
+          newGroupCipher,
           newGroupName,
           newGroupStartYear,
           newGroupTotalSem,
+          newGroupFaculty,
         );
-        group.addGroup(newGroup);
         setNewGroupCipher("");
         setNewGroupName("");
         setNewGroupStartYear("");
@@ -120,19 +119,31 @@ export default function GroupsAdmin() {
       </Form>
 
       {group.groups.map((grpItem) => (
-        <Card key={grpItem.id} data-id={grpItem.id} className="mb-3 justify-content-between">
+        <Card
+          key={grpItem.id}
+          data-id={grpItem.id}
+          className="mb-3 justify-content-between"
+        >
           <Card.Body className="ml-3 justify-content-between">
-          <Row className="mb-3"><h2>{grpItem.faculty.full_name}</h2></Row>
-          <Row>
-            <Col>
-              <Row className="mb-3"><strong>{grpItem.cipher}</strong></Row>
-              <Row>{grpItem.name}</Row>
-            </Col>
-            <Col className="pl-5">
-              <Row className="mb-3"><strong>{grpItem.start_year}</strong></Row>
-              <Row><i>{`${grpItem.total_sem} семестров`}</i></Row>
-            </Col>
-          </Row>
+            <Row className="mb-3">
+              <h2>{grpItem.faculty.full_name}</h2>
+            </Row>
+            <Row>
+              <Col>
+                <Row className="mb-3">
+                  <strong>{grpItem.cipher}</strong>
+                </Row>
+                <Row>{grpItem.name}</Row>
+              </Col>
+              <Col className="pl-5">
+                <Row className="mb-3">
+                  <strong>{grpItem.start_year}</strong>
+                </Row>
+                <Row>
+                  <i>{`${grpItem.total_sem} семестров`}</i>
+                </Row>
+              </Col>
+            </Row>
           </Card.Body>
         </Card>
       ))}

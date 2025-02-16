@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Calendar from "../components/Calendar";
-import { fetchTasks, createTask, updateTask, deleteTask } from "../http/authAPI"; 
+import {
+  fetchTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "../http/authAPI";
 
 export default function Ipr() {
   const [tasks, setTasks] = useState([]);
@@ -14,12 +19,12 @@ export default function Ipr() {
     status: "false",
   });
   const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split("T")[0]
+    new Date().toISOString().split("T")[0],
   );
 
   const fetchTasksData = useCallback(async () => {
     try {
-      const data = await fetchTasks(selectedDate); 
+      const data = await fetchTasks(selectedDate);
       setTasks(data);
     } catch (error) {
       console.error("Ошибка при получении задач:", error);
@@ -28,7 +33,7 @@ export default function Ipr() {
 
   useEffect(() => {
     fetchTasksData();
-  }, [fetchTasksData]); 
+  }, [fetchTasksData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +48,7 @@ export default function Ipr() {
       } else {
         await createTask(newTask);
       }
-      fetchTasksData(); 
+      fetchTasksData();
       resetNewTask();
     } catch (error) {
       console.error("Ошибка при отправке задачи:", error);
@@ -64,7 +69,7 @@ export default function Ipr() {
   const handleDelete = async (id) => {
     try {
       await deleteTask(id);
-      fetchTasksData(); 
+      fetchTasksData();
     } catch (error) {
       console.error("Ошибка при удалении задачи:", error);
     }
@@ -161,11 +166,18 @@ export default function Ipr() {
                 </Col>
                 <Col>
                   <div className="text-muted mb-3">
-                    {task.start_date.split("T")[0]} - {task.end_date.split("T")[0]}
+                    {task.start_date.split("T")[0]} -{" "}
+                    {task.end_date.split("T")[0]}
                   </div>
                 </Col>
-                <Col md={3} className="d-flex justify-content-between align-items-center">
-                  <Button variant="danger" onClick={() => handleDelete(task.id)}>
+                <Col
+                  md={3}
+                  className="d-flex justify-content-between align-items-center"
+                >
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(task.id)}
+                  >
                     Удалить
                   </Button>
                   <Button
@@ -181,7 +193,6 @@ export default function Ipr() {
                 <Col>
                   <div>{task.descript}</div>
                 </Col>
-                
               </Row>
             </Card.Body>
           </Card>

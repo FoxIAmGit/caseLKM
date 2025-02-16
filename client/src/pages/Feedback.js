@@ -9,7 +9,7 @@ import {
   Spinner,
   Alert,
 } from "react-bootstrap";
-import { fetchFeedback, createFeedback, deleteFeedback } from "../http/authAPI"; 
+import { fetchFeedback, createFeedback, deleteFeedback } from "../http/authAPI";
 import Contact from "../components/Contact";
 
 export default function Feedback() {
@@ -28,7 +28,7 @@ export default function Feedback() {
         setError(
           err.response
             ? err.response.data.message
-            : "Ошибка при загрузке отзывов"
+            : "Ошибка при загрузке отзывов",
         );
       } finally {
         setLoading(false);
@@ -42,16 +42,13 @@ export default function Feedback() {
     event.preventDefault();
     try {
       const newFeedback = { title, message };
-      console.log("Отправляем отзыв:", newFeedback); 
       const createdFeedback = await createFeedback(newFeedback);
       setFeedbacks((prevFeedbacks) => [...prevFeedbacks, createdFeedback]);
       setTitle("");
       setMessage("");
     } catch (err) {
       setError(
-        err.response
-          ? err.response.data.message
-          : "Ошибка при создании отзыва"
+        err.response ? err.response.data.message : "Ошибка при создании отзыва",
       );
     }
   };
@@ -60,13 +57,11 @@ export default function Feedback() {
     try {
       await deleteFeedback(id);
       setFeedbacks((prevFeedbacks) =>
-        prevFeedbacks.filter((feedback) => feedback.id !== id)
+        prevFeedbacks.filter((feedback) => feedback.id !== id),
       );
     } catch (err) {
       setError(
-        err.response
-          ? err.response.data.message
-          : "Ошибка при удалении отзыва"
+        err.response ? err.response.data.message : "Ошибка при удалении отзыва",
       );
     }
   };
@@ -136,14 +131,17 @@ export default function Feedback() {
                 <Card.Title>{feedback.title}</Card.Title>
                 <Row>
                   <Col>
-                <Card.Text>{feedback.message}</Card.Text>
-                <Card.Subtitle className="mt-1 text-muted">{`Создано: ${feedback.createdAt.split("T")[0]}`}</Card.Subtitle>
-                </Col>
-                <Col>
-                <Button variant="danger" onClick={() => handleDelete(feedback.id)}>
-                  Удалить
-                </Button>
-                </Col>
+                    <Card.Text>{feedback.message}</Card.Text>
+                    <Card.Subtitle className="mt-1 text-muted">{`Создано: ${feedback.createdAt.split("T")[0]}`}</Card.Subtitle>
+                  </Col>
+                  <Col>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDelete(feedback.id)}
+                    >
+                      Удалить
+                    </Button>
+                  </Col>
                 </Row>
               </Card.Body>
             </Card>

@@ -25,7 +25,6 @@ class practicController {
     try {
       const id = req.user.id;
       const student = await Students.findOne({ where: {userId : id} });
-      console.log(student);
       const vacancies = await Vacancies.findAndCountAll({
         include: [{ model: Jobs, include: [Companies] }],
         where: { groupId: student.groupId },  order : ["createdAt"]

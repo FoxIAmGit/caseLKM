@@ -138,16 +138,13 @@ class TimetableController {
       let { page } = req.body;
       page = page
       let searchCipher, searchTeacher
-      console.log(searchText);
       
       const groupRegex = /^[А-Яа-яЁё]{3,4}-\d{2}-\d{2}$/;
 
       if (groupRegex.test(searchText)) {
           searchCipher = searchText;
-          console.log("Найдено название группы:", searchCipher);
       } else {
           searchTeacher = searchText;
-          console.log("Найдено ФИО преподавателя:", searchTeacher);
       }
 
       const currentDate = new Date();
@@ -186,6 +183,8 @@ class TimetableController {
           case "teacher":
             const teacher = await Teachers.findOne({ where: { userId : req.user.id } });
             searchCriteria = { teacherId: teacher.id };
+            break;
+          case "admin":
             break;
         }
       }

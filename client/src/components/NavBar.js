@@ -11,7 +11,12 @@ import {
 } from "react-bootstrap";
 
 import { Context } from "../index";
-import { LOGIN_ROUTE, menuItemsStudent, menuItemsTeacher } from "../utils/consts";
+import {
+  LOGIN_ROUTE,
+  menuItemsStudent,
+  menuItemsTeacher,
+  menuItemsAdmin,
+} from "../utils/consts";
 import { logOutAPI } from "../http/userAPI";
 
 const NavBar = observer(() => {
@@ -40,32 +45,40 @@ const NavBar = observer(() => {
             </Button>
           ) : (
             <DropdownButton
-    title="Меню"
-    drop="down"
-    align="end"
-    id="dropdown-menu-align-end"
->
-    {user._user.role === "student" ? (
-        menuItemsStudent.map((item) => (
-            <Dropdown.Item
-                key={item.eventKey}
-                eventKey={item.eventKey}
-                onClick={() => navigate(item.path)}
+              title="Меню"
+              drop="down"
+              align="end"
+              id="dropdown-menu-align-end"
             >
-                {item.label}
-            </Dropdown.Item>
-        ))
-    ) : (
-        menuItemsTeacher.map((item) => (
-            <Dropdown.Item
-                key={item.eventKey}
-                eventKey={item.eventKey}
-                onClick={() => navigate(item.path)}
-            >
-                {item.label}
-            </Dropdown.Item>
-        ))
-    )}
+              {user._user.role === "student"
+                ? menuItemsStudent.map((item) => (
+                    <Dropdown.Item
+                      key={item.eventKey}
+                      eventKey={item.eventKey}
+                      onClick={() => navigate(item.path)}
+                    >
+                      {item.label}
+                    </Dropdown.Item>
+                  ))
+                : user._user.role === "teacher"
+                  ? menuItemsTeacher.map((item) => (
+                      <Dropdown.Item
+                        key={item.eventKey}
+                        eventKey={item.eventKey}
+                        onClick={() => navigate(item.path)}
+                      >
+                        {item.label}
+                      </Dropdown.Item>
+                    ))
+                  : menuItemsAdmin.map((item) => (
+                      <Dropdown.Item
+                        key={item.eventKey}
+                        eventKey={item.eventKey}
+                        onClick={() => navigate(item.path)}
+                      >
+                        {item.label}
+                      </Dropdown.Item>
+                    ))}
               <Dropdown.Divider />
               <Dropdown.Item
                 as={Button}

@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Card, Col, Container, Nav, Row } from "react-bootstrap";
 import {
-  Card,
-  Col,
-  Container,
-  Nav,
-  Row,
-} from "react-bootstrap";
-import { fetchMaterials, fetchMaterialsForStudent, fetchMaterialsForTeacher } from "../http/authAPI";
+  fetchMaterials,
+  fetchMaterialsForStudent,
+  fetchMaterialsForTeacher,
+} from "../http/authAPI";
 import { Context } from "../index";
-import AddMaterial from "../components/AddMaterial"
+import AddMaterial from "../components/AddMaterial";
 import "../components/css/Materials.css";
 
 const MaterialItem = ({ field }) => (
@@ -17,15 +15,22 @@ const MaterialItem = ({ field }) => (
       <Col className="material-subject">{field.subject.name}</Col>
     </Row>
     <Row>
-      <Col md={5} className="material-file">{field.title_file}</Col>
+      <Col md={5} className="material-file">
+        {field.title_file}
+      </Col>
       <Col md={3}>{field.type_work}</Col>
-      <Col md={2} className="material-date">{field.createdAt.slice(0,10)}</Col>
+      <Col md={2} className="material-date">
+        {field.createdAt.slice(0, 10)}
+      </Col>
       <Col>
-        <a href={field.title_file} download={field.title_file} className="btn btn-primary">
+        <a
+          href={`http://localhost:5000/api/material/download/${field.id}`}
+          className="btn btn-primary"
+        >
           Скачать
         </a>
       </Col>
-    </Row> 
+    </Row>
     <Row className="material-description">{field.descript}</Row>
   </Card.Body>
 );
@@ -42,11 +47,11 @@ export default function Materials() {
       try {
         const allMaterials = await fetchMaterials();
         setMaterials(allMaterials || []);
-        console.log(allMaterials)
-        const mineMaterials = user._user.role === "student" 
-          ? await fetchMaterialsForStudent() 
-          : await fetchMaterialsForTeacher();
-        
+        const mineMaterials =
+          user._user.role === "student"
+            ? await fetchMaterialsForStudent()
+            : await fetchMaterialsForTeacher();
+        console.log(mineMaterials)
         setForMineMaterials(mineMaterials);
       } catch (e) {
         alert("Ошибка при получении данных: " + e.message);
@@ -61,26 +66,33 @@ export default function Materials() {
       <h1 className="header-title">Учебные материалы</h1>
       <Nav variant="tabs" className="align-items-center">
         <Nav.Item>
-          <Nav.Link className={currentCategory === "all" ? "active" : ""} onClick={() => setCurrentCategory("all")}>
+          <Nav.Link
+            className={currentCategory === "all" ? "active" : ""}
+            onClick={() => setCurrentCategory("all")}
+          >
             Мои материалы
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className={currentCategory === "mine" ? "active" : ""} onClick={() => setCurrentCategory("mine")}>
-            Материалы для меня 
+          <Nav.Link
+            className={currentCategory === "mine" ? "active" : ""}
+            onClick={() => setCurrentCategory("mine")}
+          >
+            Материалы для меня
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-            <AddMaterial />
+          <AddMaterial />
         </Nav.Item>
       </Nav>
 
       <div>
-        {(currentCategory === "all" ? materials : forMineMaterials).map((field, index) => (
-          <MaterialItem key={index} field={field} />
-        ))}
+        {(currentCategory === "all" ? materials : forMineMaterials).map(
+          (field, index) => (
+            <MaterialItem key={index} field={field} />
+          ),
+        )}
       </div>
-
     </Container>
   );
 }

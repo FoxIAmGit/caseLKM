@@ -69,15 +69,16 @@ class adminController {
         if (!faculties || faculties.length === 0) {
             return next(errors.badRequest("Факультеты еще не созданы"));
         }
-        
+
         const formattedFaculties = faculties.map(faculty => {
             return {
                 id: faculty.id, 
                 cipher: faculty.cipher, 
                 full_name: faculty.full_name,
-                teach_names: faculty.teacher.user.full_name
+                teach_names: faculty.teacher ? faculty.teacher.user.full_name : 'не добавлен'
             };
         });
+
         return res.json(formattedFaculties);
     } catch (e) {
         next(errors.badRequest(e.message));
@@ -87,10 +88,12 @@ class adminController {
   async createDept(req, res, next) {
     try {
       const { name, cipher } = req.body;
-      const faculty = await Faculties.findOne({ where: cipher });
+      const faculty = Faculties.findOne({ where: {cipher : cipher} });
+      
       if (!faculty) {
         return next(errors.badRequest("Такого факультета нет"));
       }
+
       const dept = await Departments.create({ name, facultyId: faculty.id });
       return res.json(dept);
     } catch (e) {
@@ -199,24 +202,40 @@ class adminController {
 
   async createJob(req, res, next) {
     try {
-      const { title, descript, company_name } = req.body;
+      const { title } = req.body;
+      const company_name = title.company_name
+      const description = title.description
+      const tit = title.title
+
       const company = await Companies.findOne({
         where: { name: company_name },
       });
       if (!company) {
         const new_company = await Companies.create({ name: company_name });
         const job = await Jobs.create({
-          title,
-          descript,
+          tit,
+          description,
           companyId: new_company.id,
         });
         return res.json(job);
       }
-      const job = await Jobs.create({ title, descript, companyId: company.id });
+      const job = await Jobs.create({ title:tit, descript:description, companyId: company.id });
       return res.json(job);
     } catch (e) {
       next(errors.badRequest(e.message));
     }
+  }
+
+  async getJob(req, res, next){
+    try {
+      const jobs = await Jobs.findAll({include: Companies}, {order : ["createdAt"]});
+      if (!jobs) {
+        return next(errors.badRequest("Должности еще не созданы"));
+      }
+      return res.json(jobs);
+    } catch (e) {
+      next(errors.badRequest(e.message));
+      }
   }
 
   async createVacancy(req, res, next) {
@@ -245,6 +264,23 @@ class adminController {
     } catch (e) {
       next(errors.badRequest(e.message));
     }
+  }
+
+  async getVacancy(req, res, next){
+    try {
+      const vacancies = await Vacancies.findAll(
+        {include: [
+          { model: Jobs },
+          { model: Groups }
+        ],}, 
+        {order : ["$group.cipher$", 'start_date']});
+      if (!vacancies) {
+        return next(errors.badRequest("Должности еще не созданы"));
+      }
+      return res.json(vacancies);
+    } catch (e) {
+      next(errors.badRequest(e.message));
+      }
   }
 
   async createSubject(req, res, next) {
@@ -276,6 +312,23 @@ class adminController {
     } catch (e) {
       next(errors.badRequest(e.message));
     }
+  }
+
+  async getSubject(req, res, next){
+    try {
+      const subjects = await Edu_plan.findAll(
+        {include: [
+          { model: Teachers, include: Users },
+          { model: Groups }
+        ],}, 
+        {order : ["$group.cipher$", 'name']});
+      if (!subjects) {
+        return next(errors.badRequest("Должности еще не созданы"));
+      }
+      return res.json(subjects);
+    } catch (e) {
+      next(errors.badRequest(e.message));
+      }
   }
 
   async createLesson(req, res, next) {

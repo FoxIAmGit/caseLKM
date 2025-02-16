@@ -64,7 +64,7 @@ export const authRoutes = [
   {
     path: ZERO,
     Component: Zero,
-  }
+  },
 ];
 
 export const publicRoutes = [

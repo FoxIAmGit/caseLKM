@@ -26,7 +26,7 @@ const typeWorkTeacher = [
 ];
 
 export default function AddMaterial() {
-  const { user } = useContext(Context)
+  const { user } = useContext(Context);
   const [show, setShow] = useState(false);
   const [semester, setSemester] = useState("Семестр");
   const [type, setType] = useState("Тип работы");
@@ -42,10 +42,9 @@ export default function AddMaterial() {
     const fetchData = async () => {
       try {
         const nameSubject = await fetchSubjects();
-        console.log("Полученные данные:", nameSubject);
         setSubjects(nameSubject);
       } catch (error) {
-        console.error("Ошибка при получении данных:", error);
+        alert("Ошибка при получении данных:", error);
       }
     };
 
@@ -72,11 +71,10 @@ export default function AddMaterial() {
     materialData.append("semester", semester);
     materialData.append("subjectId", selectedSubject.id);
     materialData.append("file", file);
-    console.log(materialData);
 
     try {
       await createMaterials(materialData);
-      handleClose(); 
+      handleClose();
     } catch (error) {
       console.error("Ошибка при создании материала:", error);
     }
@@ -95,16 +93,20 @@ export default function AddMaterial() {
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="title" className="mb-3">
-              <Form.Control type="text" placeholder="Введите название" required />
+              <Form.Control
+                type="text"
+                placeholder="Введите название"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Control 
-                as="textarea" 
+              <Form.Control
+                as="textarea"
                 placeholder="Описание"
-                rows={3} 
-                value={description} 
-                onChange={(e) => setDescription(e.target.value)} 
+                rows={3}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </Form.Group>
 
@@ -128,37 +130,50 @@ export default function AddMaterial() {
                 title={type}
                 onSelect={(eventKey) => setType(eventKey)}
               >
-                {(user._user.role === "student" ? typeWorkStudent : typeWorkTeacher).map((field) => (
+                {(user._user.role === "student"
+                  ? typeWorkStudent
+                  : typeWorkTeacher
+                ).map((field) => (
                   <Dropdown.Item key={field.id} eventKey={field.type}>
                     {field.type}
-                  </Dropdown.Item>
-                ))}
-            </DropdownButton>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Предмет</Form.Label>
-              <DropdownButton
-                title={selectedSubject ? selectedSubject.name : "Выберите предмет"}
-                onSelect={(eventKey) => {
-                  const subject = subjects.find(sub => sub.name === eventKey);
-                  setSelectedSubject(subject);
-                }}
-              >
-               {Array.isArray(subjects) && subjects.map((field) => (
-                  <Dropdown.Item key={field.id} eventKey={field.name}>
-                    {field.name}
                   </Dropdown.Item>
                 ))}
               </DropdownButton>
             </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label >Файл</Form.Label>
-              <Form.Control className="p-1" type="file" onChange={handleFileChange} required />
+            <Form.Group>
+              <Form.Label>Предмет</Form.Label>
+              <DropdownButton
+                title={
+                  selectedSubject ? selectedSubject.name : "Выберите предмет"
+                }
+                onSelect={(eventKey) => {
+                  const subject = subjects.find((sub) => sub.name === eventKey);
+                  setSelectedSubject(subject);
+                }}
+              >
+                {Array.isArray(subjects) &&
+                  subjects.map((field) => (
+                    <Dropdown.Item key={field.id} eventKey={field.name}>
+                      {field.name}
+                    </Dropdown.Item>
+                  ))}
+              </DropdownButton>
             </Form.Group>
 
-            <Button variant="primary" type="submit">Загрузить</Button>
+            <Form.Group className="mb-3">
+              <Form.Label>Файл</Form.Label>
+              <Form.Control
+                className="p-1"
+                type="file"
+                onChange={handleFileChange}
+                required
+              />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Загрузить
+            </Button>
           </Form>
         </Modal.Body>
       </Modal>

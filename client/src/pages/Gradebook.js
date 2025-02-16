@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Col,
-  Container,
-  Row,
-  Spinner,
-  Alert,
-} from "react-bootstrap";
+import { Card, Col, Container, Row, Spinner, Alert } from "react-bootstrap";
 import { fetchGrades } from "../http/authAPI";
 
 export default function Gradebook() {
@@ -19,7 +12,6 @@ export default function Gradebook() {
       try {
         const data = await fetchGrades();
         setGrades(data.rows);
-        
       } catch (err) {
         setError(
           err.response
@@ -60,7 +52,10 @@ export default function Gradebook() {
     <Container className="my-5">
       <h1 className="text-center mb-3">Успеваемость</h1>
 
-      <Card className="text-center shadow-sm mb-3" style={{ borderRadius: "25px" }}>
+      <Card
+        className="text-center shadow-sm mb-3"
+        style={{ borderRadius: "25px" }}
+      >
         <Row className="mb-3 justify-content-between align-items-center">
           <Col>
             <Card.Title
@@ -87,17 +82,29 @@ export default function Gradebook() {
         </Row>
       </Card>
 
-      <Card className="shadow-sm d-flex flex-column" style={{ borderRadius: "25px" }}>
+      <Card
+        className="shadow-sm d-flex flex-column"
+        style={{ borderRadius: "25px" }}
+      >
         <Card.Body>
           {grades.length === 0 ? (
             <Alert variant="info">Нет оценок для отображения.</Alert>
           ) : (
             grades.map((field) => (
               <Row key={field.id} className="mb-2">
-                <Col className="ml-3" md={6}>{field.subject.name}</Col>
-                <Col md={2} className="fw-bold">{`${field.subject.semester} семестр`}</Col>
-                <Col md={2} className="fw-bold">{field.subject.type_exam}</Col>
-                <Col className="mr-3" md={1}>{field.mark}</Col>
+                <Col className="ml-3" md={6}>
+                  {field.subject.name}
+                </Col>
+                <Col
+                  md={2}
+                  className="fw-bold"
+                >{`${field.subject.semester} семестр`}</Col>
+                <Col md={2} className="fw-bold">
+                  {field.subject.type_exam}
+                </Col>
+                <Col className="mr-3" md={1}>
+                  {field.mark}
+                </Col>
               </Row>
             ))
           )}

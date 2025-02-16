@@ -23,14 +23,12 @@ const Auth = observer(() => {
         }
       })
       .then(() => {
-        const page =  user._user.role !== "admin" ? MAIN : ADMIN_ROUTE 
-        navigate(page)
+        const page = user._user.role !== "admin" ? MAIN : ADMIN_ROUTE;
+        navigate(page);
       })
       .catch((e) => {
         alert(e.response ? e.response.data.message : "Ошибка при входе");
       });
-
-    console.log(user);
   };
 
   return (
